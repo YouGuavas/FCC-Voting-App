@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/YouGuavas/my-react-boilerplate/issues"
   },
-  "homepage": "https://github.com/YouGuavas/my-react-boilerplate#readme"
+  "homepage": "https://github.com/YouGuavas/my-react-boilerplate#readme",
+  "dependencies": {
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2"
+  }
 }
