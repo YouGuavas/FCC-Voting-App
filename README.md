@@ -1,5 +1,5 @@
-#My React Boilerplate
+# My React Boilerplate
 
-##Setup
+## Setup
 1. npm i
 2. npm start
