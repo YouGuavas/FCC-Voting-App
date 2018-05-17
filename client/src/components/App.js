@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Content from './Content';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import Poll from './Poll'; 
 
 export default class App extends Component {
 	render() {
@@ -22,7 +23,16 @@ export default class App extends Component {
 								</div>
 							</nav>
 						</div>
-						<Route exact path='/' component={Content}/>
+						<div className='container jumbotron'>
+							<div className='columns'>
+								<div className='column is-12 has-text-centered'>
+									<Route exact path='/' component={Content}/>
+									<Route path='/polls/:poll' render={props => (
+										<Poll {...props}/>
+										)}/>
+								</div>
+							</div>
+						</div>
 					</div>
 				</Router>
 			)

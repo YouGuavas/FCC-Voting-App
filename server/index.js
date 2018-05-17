@@ -28,14 +28,16 @@ app.get('/api/polls', (req, res) => {
 			options: {
 				Jefferson: 0,
 				Jackson: 0
-			}
+			},
+			url: '1'
 		},
 		{
 			title: 'Pizza v Tacos',
 			options: {
 				Pizza: 0,
 				Tacos: 0
-			}
+			},
+			url: '2'
 		}
 	];
 	res.json(polls);
