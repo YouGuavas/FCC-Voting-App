@@ -17,7 +17,7 @@ export default class Polls extends Component {
 	render() {
 		const {polls} = this.state;
 		return(
-			<div>
+			<div className='polls'>
 				{polls.map((poll, index) => (<Poll title={poll.title} key={index}/>))}
 			</div>
 			)
@@ -27,7 +27,7 @@ export default class Polls extends Component {
 class Poll extends Component {
 	render() {
 		return(
-			<div className='level poll'>
+			<div className='level'>
 				<div className='level-item'>
 					{this.props.title}
 					</div>
