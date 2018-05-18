@@ -2,3 +2,5 @@
 node_modules/
 #Project
 dist/
+#misc
+.env
