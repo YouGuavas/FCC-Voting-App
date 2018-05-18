@@ -15,4 +15,10 @@ body {
 .polls {
 	background-color: white;
 	border: 1px solid lightgrey;
+	a {
+		color: #7a7a7a;
+		&:hover {
+			color: black;
+		}
+	}
 }

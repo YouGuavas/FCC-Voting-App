@@ -26,8 +26,8 @@ app.get('/api/polls', (req, res) => {
 		{
 			title: 'Jefferson v Jackson',
 			options: {
-				Jefferson: 0,
-				Jackson: 0
+				Jefferson: 1,
+				Jackson: 1
 			},
 			url: '1'
 		},
