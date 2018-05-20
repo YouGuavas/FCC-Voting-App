@@ -5,7 +5,7 @@ export default class Content extends Component {
 	render() { 
 		return(
 			<div>
-				<h1>FCC Voting</h1>
+				<h1 className='title'>FCC Voting</h1>
 				<p>Here are a few polls you may choose to vote on.</p>
 				<p>You may also sign in to create a poll of your own!</p>
 				<Polls/>
