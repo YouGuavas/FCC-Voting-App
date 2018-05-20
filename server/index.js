@@ -30,21 +30,23 @@ app.get('/api/polls', (req, res) => {
 		const collection = db.collection(process.env.COLLECTION);
 		collection.find({}).toArray((err, data) => {
 			if (err) throw err;
-			red = data;
 			client.close();
 			res.json(data);
 			res.end();
 		});
 	});
 });
-app.get('/api/vote/:POLL_ID', (req, res) => {
+app.get('/api/vote/:POLL_ID/:VOTE_FOR', (req, res) => {
 	mongo.connect(mongoURI, (err, client) => {
 		if(err) throw err;
 		const db = client.db(process.env.DB_NAME);
 		const collection = db.collection(process.env.COLLECTION);
-		collection.find({_id: req.params.POLL_ID.toNumber()}).toArray((err, data) => {
+		const update = `poll.options.${req.params.VOTE_FOR}`;
+		collection.update({_id: Number(req.params.POLL_ID)}, {$inc: {[update]: 1}}, (err, data) => {
 			if (err) throw err;
-			red = data;
+			client.close();
+			res.send(data);
+			res.end();
 		})
 	})
 });
