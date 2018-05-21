@@ -22,7 +22,9 @@ export default class Poll extends Component {
 		chartData.map(item => {
 			item.name === name ? (
 				item.value += 1,
+				//increase vote count in state
 				vote(`${item.id}/${name}`)
+				//increase vote count in database
 				)
 			 : null
 		});
@@ -62,9 +64,12 @@ class Chart extends Component {
 		const x = cx + radius * Math.cos(-midAngle * RADIAN);
 		const y = cy + radius * Math.sin(-midAngle * RADIAN);
 		const item = this.props.chartData[index];
+		//---------------------------------------
+		//Ensure label text size never goes lower than min
 		const min = 15;
 		const pSize = (percent*40).toFixed(0);
-		const fSize = pSize > min ? pSize : min; 
+		const fSize = ((pSize > min) || (pSize === 0) ) ? pSize : min;
+
 		return (
 			<text x={x} y={y} fill='black' fontSize={fSize} textAnchor='middle'>
 				{`${item.name} - ${(percent*100).toFixed(0)}%`}
@@ -76,6 +81,8 @@ class Chart extends Component {
 
 		this.props.chartData.map(entry => entry.value).reduce((acc, val) => acc+val) === 0 ? (
 			this.props.chartData.map(entry => { chartData.push({name: entry.name, value: entry.value + 1}) })
+			//recharts doesn't display pie charts if all values are 0, because of its inability to compute the percentage
+			//this sets all values equal to 1 only when all actual values equal 0, so that the pie chart will always display and with appropriate percentages
 			) : '';
 		return(
 		<ResponsiveContainer width='100%' height={400} id='mobilePi'>
