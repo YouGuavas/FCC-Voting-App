@@ -9,6 +9,7 @@ export default class Polls extends Component {
 	}
 	getPolls = () => {
 		getPollsData().then(polls => {
+			//return vote data, then update state
 			this.setState({polls});
 		});
 	}

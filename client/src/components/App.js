@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import Content from './Content';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import Nav from './Nav';
-import Poll from './Poll'; 
+import Poll from './Poll';
+import NewPoll from './NewPoll'; 
 
 export default class App extends Component {
 	render() {
@@ -19,6 +20,7 @@ export default class App extends Component {
 												<Route path='/polls/:poll' render={props => (
 													<Poll {...props}/>
 													)}/>
+												<Route path='/newpoll' component={NewPoll}/>
 											</div>
 										</div>
 									</div>
