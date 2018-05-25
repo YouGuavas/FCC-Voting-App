@@ -53,6 +53,7 @@ export default class Poll extends Component {
 					this.state.chartData.map(
 						(item, index) => (<p key={index}>{`${item.name}: ${item.value}`}</p>))}
 				</div>
+				{this.props.user.id === this.props.id ? <div>Tweetz!</div> : ''}
 			</div>
 			)
 	}
@@ -68,12 +69,13 @@ class Chart extends Component {
 		//Ensure label text size never goes lower than min
 		const min = 15;
 		const pSize = (percent*40).toFixed(0);
-		const fSize = ((pSize > min) || (pSize === 0) ) ? pSize : min;
+		console.log(percent)
+		const fSize = (pSize > min) ? pSize : min;
 
 		return (
-			<text x={x} y={y} fill='black' fontSize={fSize} textAnchor='middle'>
+			percent > 0 ? (<text x={x} y={y} fill='black' fontSize={fSize} textAnchor='middle'>
 				{`${item.name} - ${(percent*100).toFixed(0)}%`}
-			</text>
+			</text>) : (<div></div>)
 		);
 	}
 	render() {

@@ -1,11 +1,29 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
+import TwitterLogin from 'react-twitter-auth';
 
 export default class Nav extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			isAuthed: false,
+			user: null,
+			token: ''
+		}
+	}
 	handleClick = () => {
 		document.getElementById('burger').classList.toggle('is-active');
 		document.getElementById('navMenu').classList.toggle('is-active');
 		//toggle hamburger menu
+	}
+	handleFail = (err) => {
+		this.props.handleFail(err);
+	}
+	handleSuccess = (res) => {
+		this.props.handleSuccess(res);
+	}
+	logout = () => {
+		this.props.logout();
 	}
 	render() {
 		return(
@@ -22,7 +40,9 @@ export default class Nav extends Component {
 					<div id='navMenu' className='navbar-menu'>
 						<div className='navbar-end'>
 							<Link to='/' className='navbar-item'>Home</Link>
-							<Link to='/newpoll' className='navbar-item'>New Poll</Link>
+							{this.props.isAuthed === true ? <Link to='/newpoll' className='navbar-item'>New Poll</Link> : null}
+							{this.props.isAuthed === true ?  <Link to='/mypolls' className='navbar-item'>My Polls</Link> : null}
+							{this.props.isAuthed === true ? <Link to='/' className='navbar-item'>Logout</Link> : <TwitterLogin loginUrl='http://localhost:3333/api/auth/twitter' onFail={this.handleFail} onSuccess={this.handleSuccess} requestTokenUrl='http://localhost:3333/api/auth/twitter/reverse' />}
 						</div>
 					</div>
 				</nav>

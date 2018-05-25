@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {getPollsData} from '../utils/api';
-import {Link} from 'react-router-dom';
+import Item from './Item';
 
 export default class Polls extends Component {
 	constructor() {
@@ -20,22 +20,8 @@ export default class Polls extends Component {
 		const {polls} = this.state;
 		return(
 			<div className='polls'>
-				{polls.map((poll, index) => (<Item title={poll.poll.title} url={poll._id} options={poll.poll.options} key={index}/>))}
+				{polls.map((poll, index) => (<Item title={poll.poll.title} id={poll.id} url={poll._id} options={poll.poll.options} key={index}/>))}
 			</div>
-			)
-	}
-}
-
-class Item extends Component {
-	render() {
-		return(
-			<Link to={{pathname:`/polls/${this.props.url}`, state:{id: this.props.url, options: this.props.options, title: this.props.title}}}>
-				<div className='level'>
-					<div className='level-item'>
-						{this.props.title}
-					</div>
-				</div>
-			</Link>
 			)
 	}
 }
