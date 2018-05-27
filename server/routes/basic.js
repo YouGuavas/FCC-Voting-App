@@ -40,15 +40,30 @@ router.post('/polls', (req, res) => {
 		const collection = db.collection(process.env.COLLECTION);
 		let query = {};
 		//console.log(req.body);
+		//console.log(req.body);
 		req.body.id ? query = {'id': req.body.id} : null;
 		collection.find(query).toArray((err, data) => {
-			//populate list of polls with all created polls
+			//populate list of polls with all created polls, or with the desired poll
 			if (err) throw err;
 			client.close();
 			res.json(data);
 			res.end();
 		});
 	});
+});
+router.get('/poll/:POLL_ID', (req, res) => {
+	mongo.connect(mongoURI, (err, client) => {
+		if (err) throw err;
+		const db = client.db(process.env.DB_NAME);
+		const collection = db.collection(process.env.COLLECTION);
+		const query = {_id: ObjectId(req.params.POLL_ID)};
+		collection.findOne(query, (err, data) => {
+			if (err) console.log(err);
+			client.close();
+			res.json(data);
+			res.end();//
+		})
+	})
 });
 router.get('/vote/:POLL_ID/:VOTE_FOR', (req, res) => {
 	mongo.connect(mongoURI, (err, client) => {
