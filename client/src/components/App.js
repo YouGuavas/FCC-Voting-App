@@ -53,7 +53,7 @@ export default class App extends Component {
 										<div className='columns'>
 											<div className='column is-12 has-text-centered'>
 												<Route exact path='/' component={Content}/>
-												<Route path='/polls/:poll' render={props => (
+												<Route path='/poll/:poll' render={props => (
 													<Poll {...props} user={user}/>
 													)}/>
 												<Route path='/newpoll' render={props => (

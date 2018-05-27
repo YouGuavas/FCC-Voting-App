@@ -8,7 +8,8 @@ export default class Nav extends Component {
 		this.state = {
 			isAuthed: false,
 			user: null,
-			token: ''
+			token: '',
+			loading: false
 		}
 	}
 	handleClick = () => {
@@ -20,7 +21,16 @@ export default class Nav extends Component {
 		this.props.handleFail(err);
 	}
 	handleSuccess = (res) => {
-		this.props.handleSuccess(res);
+		this.setState({
+			loading:false
+		}, () => {
+			this.props.handleSuccess(res);
+		});
+	}
+	handleLoad = () => {
+		this.setState({
+			loading: true
+		})
 	}
 	logout = () => {
 		this.props.logout();
@@ -42,7 +52,7 @@ export default class Nav extends Component {
 							<Link to='/' className='navbar-item'>Home</Link>
 							{this.props.isAuthed === true ? <Link to='/newpoll' className='navbar-item'>New Poll</Link> : null}
 							{this.props.isAuthed === true ?  <Link to='/mypolls' className='navbar-item'>My Polls</Link> : null}
-							{this.props.isAuthed === true ? <Link to='/' className='navbar-item'>Logout</Link> : <TwitterLogin loginUrl='http://localhost:3333/api/auth/twitter' onFail={this.handleFail} onSuccess={this.handleSuccess} requestTokenUrl='http://localhost:3333/api/auth/twitter/reverse' />}
+							{this.props.isAuthed === true ? <Link to='/' className='navbar-item'>Logout</Link> : !this.state.loading ? <TwitterLogin loginUrl='http://localhost:3333/api/auth/twitter' onClick={this.handleLoad} onFailure={this.handleFail} onSuccess={this.handleSuccess} requestTokenUrl='http://localhost:3333/api/auth/twitter/reverse' /> : <i className='fas fa-spinner fa-pulse'></i>}
 						</div>
 					</div>
 				</nav>
