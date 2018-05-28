@@ -19,8 +19,10 @@ export default class Polls extends Component {
 	render() {
 		const {polls} = this.state;
 		return(
-			<div className='polls'>
-				{polls.map((poll, index) => (<Item title={poll.poll.title} id={poll.id} url={poll._id} options={poll.poll.options} key={index}/>))}
+			<div>
+				<div className='polls'>
+					{polls.map((poll, index) => (<Item title={poll.poll.title} id={poll.id} url={poll._id} options={poll.poll.options} key={index}/>))}
+				</div>
 			</div>
 			)
 	}
