@@ -9,6 +9,11 @@ export default class Poll extends Component {
 		super();
 		this.state = {}
 	}
+	handleClickItem = () => {
+		document.getElementById('burger').classList.contains('is-active') ? (console.log('hi'), document.getElementById('burger').classList.toggle('is-active')) : null;
+		document.getElementById('navMenu').classList.contains('is-active') ? document.getElementById('navMenu').classList.toggle('is-active') : null;
+		//If the burger menu is active, turn it off on click of menu item
+	}
 	getPoll =(pollId)=> {
 		getPollData(pollId).then(res => {
 			const poll = res.data.poll;
@@ -28,6 +33,7 @@ export default class Poll extends Component {
 		this.getPoll(search);
 	}
 	handleClick = () => {
+		this.handleClickItem();
 		const select = document.getElementById('voteSelect');
 		const name = select.value;
 		let chartData = this.state.chartData;
@@ -60,8 +66,8 @@ export default class Poll extends Component {
 					{ this.state.chartData ? <Chart chartData={this.state.chartData}/> : null}
 				{data ? 
 				<div className='select'>
-					<select id='voteSelect'>
-						{Object.keys(data.options).map((key,index)=><option key={index}>{key}</option>)}
+					<select id='voteSelect' onClick={this.handleClickItem}>
+						{Object.keys(data.options).map((key,index)=><option key={index} onClick={this.handleClickItem}>{key}</option>)}
 					</select>
 				</div> : null }
 				{data ?
@@ -74,7 +80,7 @@ export default class Poll extends Component {
 						(item, index) => (<p key={index}>{`${item.name}: ${item.value}`}</p>))}
 				</div> : null }
 				{data ? 
-				<a href={`https://twitter.com/intent/tweet?url=${encodeURI(url)}&text=${encodeURI(tweet)}`} className='is-primary button'>
+				<a href={`https://twitter.com/intent/tweet?url=${encodeURI(url)}&text=${encodeURI(tweet)}`} onClick={this.handleClickItem} className='is-primary button'>
 					<i className='fa fa-fw fa-twitter'></i>Share!
 				</a> : null}
 			</div>
