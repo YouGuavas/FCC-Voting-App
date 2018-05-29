@@ -2,16 +2,21 @@ body {
 	font-family: sans-serif;
 }
 a {
-.level {
-	&:not(:last-child) {
-		border-bottom: 1px solid lightgrey;
-	}
-	margin-bottom: 0;
-	padding: 7px 0px;	
-	&:hover {
-		background-color: lightgrey;
+	&.navbar-item {
+		&:hover {
+			color: #4a4a4a;
 		}
 	}
+	.level {
+		&:not(:last-child) {
+			border-bottom: 1px solid lightgrey;
+		}
+		margin-bottom: 0;
+		padding: 7px 0px;	
+		&:hover {
+			background-color: lightgrey;
+			}
+		}
 }
 .polls {
 	background-color: white;
