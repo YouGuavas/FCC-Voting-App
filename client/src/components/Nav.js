@@ -16,6 +16,11 @@ export default class Nav extends Component {
 		document.getElementById('navMenu').classList.toggle('is-active');
 		//toggle hamburger menu
 	}
+	handleClickItem = () => {
+		console.log(document.getElementById('burger').classList);
+		document.getElementById('burger').classList.contains('is-active') ? (console.log('hi'), document.getElementById('burger').classList.toggle('is-active')) : null;
+		document.getElementById('navMenu').classList.contains('is-active') ? document.getElementById('navMenu').classList.toggle('is-active') : null;
+	}
 	handleFail = (err) => {
 		this.props.handleFail(err);
 	}
@@ -39,7 +44,7 @@ export default class Nav extends Component {
 					</div>
 					<div id='navMenu' className='navbar-menu'>
 						<div className='navbar-end'>
-							<Link to='/' className='navbar-item'>Home</Link>
+							<Link to='/' onClick={this.handleClickItem} className='navbar-item'>Home</Link>
 							{this.props.isAuthed === true ? <Link to='/newpoll' className='navbar-item'>New Poll</Link> : null}
 							{this.props.isAuthed === true ?  <Link to='/mypolls' className='navbar-item'>My Polls</Link> : null}
 							{this.props.isAuthed === true ? <Link to='/' className='navbar-item'>Logout</Link> : <TwitterLogin loginUrl='http://localhost:3333/api/auth/twitter' onFailure={this.handleFail} onSuccess={this.handleSuccess} requestTokenUrl='http://localhost:3333/api/auth/twitter/reverse' /> }
