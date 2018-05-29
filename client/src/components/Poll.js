@@ -75,7 +75,7 @@ export default class Poll extends Component {
 				</div> : null }
 				{data ? 
 				<a href={`https://twitter.com/intent/tweet?url=${encodeURI(url)}&text=${encodeURI(tweet)}`} className='is-primary button'>
-					<span className='icon is-small'><i className='fa fa-twitter'></i></span> Share!
+					<i className='fa fa-fw fa-twitter'></i>Share!
 				</a> : null}
 			</div>
 			)
