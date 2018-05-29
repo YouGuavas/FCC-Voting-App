@@ -17,9 +17,9 @@ export default class Nav extends Component {
 		//toggle hamburger menu
 	}
 	handleClickItem = () => {
-		console.log(document.getElementById('burger').classList);
 		document.getElementById('burger').classList.contains('is-active') ? (console.log('hi'), document.getElementById('burger').classList.toggle('is-active')) : null;
 		document.getElementById('navMenu').classList.contains('is-active') ? document.getElementById('navMenu').classList.toggle('is-active') : null;
+		//If the burger menu is active, turn it off on click of menu item
 	}
 	handleFail = (err) => {
 		this.props.handleFail(err);
@@ -29,13 +29,14 @@ export default class Nav extends Component {
 	}
 	logout = () => {
 		this.props.logout();
+		this.handleClickItem();
 	}
 	render() {
 		return(
 			<div className='hero-head'>
 				<nav className='navbar is-light'>
 					<div className='navbar-brand'>
-						<Link to='/' className='navbar-item'>fcc-voting</Link>
+						<Link to='/' onClick={this.handleClickItem} className='navbar-item'>fcc-voting</Link>
 						<span id='burger' className="navbar-burger burger" onClick={this.handleClick}>
 		          <span></span>
 		          <span></span>
@@ -45,9 +46,9 @@ export default class Nav extends Component {
 					<div id='navMenu' className='navbar-menu'>
 						<div className='navbar-end'>
 							<Link to='/' onClick={this.handleClickItem} className='navbar-item'>Home</Link>
-							{this.props.isAuthed === true ? <Link to='/newpoll' className='navbar-item'>New Poll</Link> : null}
-							{this.props.isAuthed === true ?  <Link to='/mypolls' className='navbar-item'>My Polls</Link> : null}
-							{this.props.isAuthed === true ? <Link to='/' className='navbar-item'>Logout</Link> : <TwitterLogin loginUrl='http://localhost:3333/api/auth/twitter' onFailure={this.handleFail} onSuccess={this.handleSuccess} requestTokenUrl='http://localhost:3333/api/auth/twitter/reverse' /> }
+							{this.props.isAuthed === true ? <Link to='/newpoll' onClick={this.handleClickItem} className='navbar-item'>New Poll</Link> : null}
+							{this.props.isAuthed === true ?  <Link to='/mypolls' onClick={this.handleClickItem} className='navbar-item'>My Polls</Link> : null}
+							{this.props.isAuthed === true ? <Link to='/' onClick={this.logout} className='navbar-item'>Logout</Link> : <TwitterLogin className='navbar-item twitterer' loginUrl='http://localhost:3333/api/auth/twitter' onFailure={this.handleFail} onSuccess={this.handleSuccess} requestTokenUrl='http://localhost:3333/api/auth/twitter/reverse' /> }
 						</div>
 					</div>
 				</nav>
