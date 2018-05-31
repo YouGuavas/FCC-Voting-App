@@ -26,8 +26,8 @@ I built this project from [FreeCodeCamp's curriculum](https://learn.freecodecamp
 - mongodb running on port 27017
 
 ## Built With
-- (React)[https://reactjs.org/]
-- (Node)[https://nodejs.org/en/]
-- (Express)[https://expressjs.com/]
-- (Mongo)[https://www.mongodb.com/]
-- (npm)[https://www.npmjs.com/]
+- [React](https://reactjs.org/)
+- [Node](https://nodejs.org/en/)
+- [Express](https://expressjs.com/)
+- [Mongo](https://www.mongodb.com/)
+- [npm](https://www.npmjs.com/)
