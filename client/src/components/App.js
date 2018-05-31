@@ -22,6 +22,7 @@ export default class App extends Component {
 		const token = res.headers.get('x-auth-token');
 		res.json().then(user => {
 			if(token) {
+				localStorage.setItem('authData', JSON.stringify({isAuthed: true, user: user, token: token}));
 				this.setState({
 					isAuthed: true,
 					user: user,
@@ -31,13 +32,17 @@ export default class App extends Component {
 		})
 	}
 	logout = () => {
-		this.setState({
-			isAuthed: false,
-			user: null,
-			token: ''
-		})
+			localStorage.setItem('authData', JSON.stringify({isAuthed: false, user: {id: null}, token: ''}))
+			//console.log(JSON.parse(localStorage['authData']));
+			this.setState({
+				isAuthed: false,
+				user: null,
+				token: ''
+			})
 	}
-
+	componentDidMount() {
+		typeof localStorage['authData'] !== 'undefined' ? this.setState(JSON.parse(localStorage['authData'])) : null;
+	}
 
 	render() {
 		const isAuthed = this.state.isAuthed;
@@ -53,15 +58,9 @@ export default class App extends Component {
 										<div className='columns'>
 											<div className='column is-12 has-text-centered'>
 												<Route exact path='/' component={Content}/>
-												<Route path='/poll/:poll' render={props => (
-													<Poll {...props} user={user}/>
-													)}/>
-												<Route path='/newpoll' render={props => (
-													<NewPoll {...props} user={user} />
-													)}/>
-												<Route path='/mypolls' render={props => (
-													<MyPolls {...props} user={user} />
-													)}/>
+												<Route path='/poll/:poll' component={Poll}/>
+												<Route path='/newpoll' component={NewPoll}/>
+												<Route path='/mypolls' component={MyPolls}/>
 											</div>
 										</div>
 									</div>

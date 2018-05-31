@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {PieChart, Pie, Cell, ResponsiveContainer} from 'recharts';
-import { vote, getPollData } from '../utils/api';
+import { vote, getPollData, deleteMe } from '../utils/api';
 
 const RADIAN = Math.PI/180;
 const colors = ['#8884d8', 'red', 'green'];
@@ -17,20 +17,27 @@ export default class Poll extends Component {
 	getPoll =(pollId)=> {
 		getPollData(pollId).then(res => {
 			const poll = res.data.poll;
+			const uID = res.data.id;
 			//return vote data, then update state
 			let chartData = [];
 			Object.keys(poll.options).map(item => {
 				chartData.push({name: item, value: poll.options[item]});
 			})
+
 			this.setState({
 				poll,
-				chartData
+				chartData,
+				uID
 			});
 		});
 	}
 	componentDidMount() {
 		const search = window.location.pathname.split('/')[2];
 		this.getPoll(search);
+	}
+	handleDelete = () => {
+		this.handleClickItem();
+		deleteMe()
 	}
 	handleClick = () => {
 		this.handleClickItem();
@@ -83,6 +90,10 @@ export default class Poll extends Component {
 				<a href={`https://twitter.com/intent/tweet?url=${encodeURI(url)}&text=${encodeURI(tweet)}`} onClick={this.handleClickItem} className='is-primary button'>
 					<i className='fa fa-fw fa-twitter'></i>Share!
 				</a> : null}
+				{this.state.uID === JSON.parse(localStorage['authData']).user.id ? 
+					<a className='button is-danger' onClick={this.handleDelete}>
+						Delete
+					</a> : null }
 			</div>
 			)
 	}

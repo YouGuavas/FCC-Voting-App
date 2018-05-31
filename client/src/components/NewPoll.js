@@ -15,10 +15,10 @@ export default class NewPoll extends Component {
 	handleClick = () => {
 		let obj = {};
 		this.state.options.map(item => {obj[item] = 0});
-		this.props.user ? (
+		JSON.parse(localStorage['authData']).isAuthed === true ? (
 			this.state.title.length > 2 ? (
 				this.state.options.length > 1 ? (
-					newPoll(this.state.title, this.props.user, obj),
+					newPoll(this.state.title, JSON.parse(localStorage['authData']).user, obj),
 					window.location.replace(window.location.origin)
 					) : alert('Please add at least 2 options.')) : alert('Please add a title.')) : alert('Please sign in!');
 	}

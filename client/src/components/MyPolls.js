@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getPollsData} from '../utils/api';
+import {getMyPollsData} from '../utils/api';
 import Item from './Item';
 
 export default class MyPolls extends Component {
@@ -8,7 +8,8 @@ export default class MyPolls extends Component {
 		this.state = {polls: []};
 	}
 	getPolls = () => {
-		getPollsData(this.props.user).then(polls => {
+		console.log(JSON.parse(localStorage['authData']))
+		getMyPollsData(JSON.parse(localStorage['authData']).user).then(polls => {
 			//return vote data, then update state
 			this.setState({polls});
 		});

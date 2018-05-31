@@ -3,14 +3,6 @@ import {Link} from 'react-router-dom';
 import TwitterLogin from 'react-twitter-auth';
 
 export default class Nav extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			isAuthed: false,
-			user: null,
-			token: ''
-		}
-	}
 	handleClick = () => {
 		document.getElementById('burger').classList.toggle('is-active');
 		document.getElementById('navMenu').classList.toggle('is-active');
