@@ -1,5 +1,4 @@
 # My React Boilerplate
-## About
 I built this project from [FreeCodeCamp's curriculum](https://learn.freecodecamp.org/coding-interview-prep/take-home-projects/build-a-voting-app)
 
 ## User Stories
@@ -13,7 +12,7 @@ I built this project from [FreeCodeCamp's curriculum](https://learn.freecodecamp
 - As an authenticated user, if I don't like the options on a poll, I can create a new option.
 
 
-### Setup
+## Setup
 1. open terminal tabs for 'client' and for 'server'
 2. Server
 	1. npm i
@@ -21,3 +20,14 @@ I built this project from [FreeCodeCamp's curriculum](https://learn.freecodecamp
 3. Client
 	1. npm i
 	2. npm start
+
+### Prerequisites
+- Node & npm
+- mongodb running on port 27017
+
+## Built With
+- (React)[https://reactjs.org/]
+- (Node)[https://nodejs.org/en/]
+- (Express)[https://expressjs.com/]
+- (Mongo)[https://www.mongodb.com/]
+- (npm)[https://www.npmjs.com/]
