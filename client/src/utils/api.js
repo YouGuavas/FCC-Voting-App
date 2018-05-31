@@ -1,11 +1,26 @@
 import axios from 'axios';
 
 const BASE_URL = 'http://localhost:3333';
-export {getPollsData, vote, newPoll, getPollData};
-function getPollsData(user) {
+export {getPollsData, getMyPollsData, vote, newPoll, getPollData, deleteMe};
+function getPollsData() {
 	//console.log(user);
 	const url = `${BASE_URL}/api/polls`;
+	return axios.post(url).then(res=>res.data);
+}
+function getMyPollsData(user) {
+	//console.log(user);
+	const url = `${BASE_URL}/api/mypolls`;
 	return axios.post(url, user).then(res=>res.data);
+}
+function deleteMe(poll, cb) {
+	const url = `${BASE_URL}/api/delete/${poll}`;
+	axios.get(url)
+		.then(() => {
+					cb();
+			})
+		.catch(o_O => {
+			console.log(o_O);
+		})
 }
 function getPollData(poll) {
 	const url = `${BASE_URL}/api/poll/${poll}`;

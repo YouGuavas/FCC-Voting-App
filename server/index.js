@@ -18,7 +18,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors(corsOption));
 
-
 app.use('/api', routes);
 
 app.listen(port, () => {

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {PieChart, Pie, Cell, ResponsiveContainer} from 'recharts';
 import { vote, getPollData, deleteMe } from '../utils/api';
+import {Link } from 'react-router-dom';
 
 const RADIAN = Math.PI/180;
 const colors = ['#8884d8', 'red', 'green'];
@@ -18,6 +19,7 @@ export default class Poll extends Component {
 		getPollData(pollId).then(res => {
 			const poll = res.data.poll;
 			const uID = res.data.id;
+			const pID = res.data._id;
 			//return vote data, then update state
 			let chartData = [];
 			Object.keys(poll.options).map(item => {
@@ -27,7 +29,8 @@ export default class Poll extends Component {
 			this.setState({
 				poll,
 				chartData,
-				uID
+				uID,
+				pID
 			});
 		});
 	}
@@ -37,7 +40,10 @@ export default class Poll extends Component {
 	}
 	handleDelete = () => {
 		this.handleClickItem();
-		deleteMe()
+		deleteMe(this.state.pID, () => {
+			window.location.replace(window.location.origin);
+			//go to homepage after deletion
+		});
 	}
 	handleClick = () => {
 		this.handleClickItem();

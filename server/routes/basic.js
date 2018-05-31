@@ -39,9 +39,6 @@ router.post('/polls', (req, res) => {
 		const db = client.db(process.env.DB_NAME);
 		const collection = db.collection(process.env.COLLECTION);
 		let query = {};
-		//console.log(req.body);
-		//console.log(req.body);
-		req.body.id ? query = {'id': req.body.id} : null;
 		collection.find(query).toArray((err, data) => {
 			//populate list of polls with all created polls, or with the desired poll
 			if (err) throw err;
@@ -51,6 +48,38 @@ router.post('/polls', (req, res) => {
 		});
 	});
 });
+router.post('/mypolls', (req, res) => {
+	mongo.connect(mongoURI, (err, client) => {
+		if (err) throw err;
+		const db = client.db(process.env.DB_NAME);
+		const collection = db.collection(process.env.COLLECTION);
+		let query = {'id': 'none'};
+		req.body.id ? query = {'id': req.body.id} : null;
+
+		collection.find(query).toArray((err, data) => {
+			//populate list of polls with all created polls, or with the desired poll
+			if (err) throw err;
+			client.close();
+			res.json(data);
+			res.end();
+		});
+	});
+});
+router.get('/delete/:POLL_ID', (req, res) => {
+	mongo.connect(mongoURI, (err, client) => {
+		if (err) throw err;
+		const db = client.db(process.env.DB_NAME);
+		const collection = db.collection(process.env.COLLECTION);
+		const query = {_id: ObjectId(req.params.POLL_ID)};
+		collection.deleteOne(query, (err, data) => {
+			if (err) throw err;
+			client.close();
+			res.json(data);
+			res.end();
+		})
+	})
+});
+
 router.get('/poll/:POLL_ID', (req, res) => {
 	mongo.connect(mongoURI, (err, client) => {
 		if (err) throw err;
