@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {PieChart, Pie, Cell, ResponsiveContainer} from 'recharts';
-import { vote, getPollData, deleteMe } from '../utils/api';
+import { vote, getPollData, deleteMe, addOptionToPoll } from '../utils/api';
 import {Link } from 'react-router-dom';
 
 const RADIAN = Math.PI/180;
-const colors = ['#8884d8', 'red', 'green'];
+const colors = ['#8884d8', 'red', 'green', 'orange', 'magenta'];
 export default class Poll extends Component {
 	constructor() {
 		super();
@@ -14,6 +14,7 @@ export default class Poll extends Component {
 		document.getElementById('burger').classList.contains('is-active') ? (console.log('hi'), document.getElementById('burger').classList.toggle('is-active')) : null;
 		document.getElementById('navMenu').classList.contains('is-active') ? document.getElementById('navMenu').classList.toggle('is-active') : null;
 		//If the burger menu is active, turn it off on click of menu item
+		this.state.addingOption === true ? this.setState({addingOption: false}) : null;
 	}
 	getPoll =(pollId)=> {
 		getPollData(pollId).then(res => {
@@ -30,7 +31,8 @@ export default class Poll extends Component {
 				poll,
 				chartData,
 				uID,
-				pID
+				pID,
+				addingOption:false
 			});
 		});
 	}
@@ -45,11 +47,21 @@ export default class Poll extends Component {
 			//go to homepage after deletion
 		});
 	}
+	handleNewOption = () => {
+		this.setState({
+			addingOption: true
+		})
+	}
+	handleNewOptionSubmit = () => {
+		const option = document.getElementById('ahoy').value;
+		addOptionToPoll(this.state.pID, option);
+	}
 	handleClick = () => {
 		this.handleClickItem();
 		const select = document.getElementById('voteSelect');
 		const name = select.value;
 		let chartData = this.state.chartData;
+		if (Object.keys(chartData).indexOf(name) !== -1) return;
 		const search = window.location.pathname.split('/')[2];
 		chartData.map(item => {
 			console.log(item);
@@ -81,12 +93,23 @@ export default class Poll extends Component {
 				<div className='select'>
 					<select id='voteSelect' onClick={this.handleClickItem}>
 						{Object.keys(data.options).map((key,index)=><option key={index} onClick={this.handleClickItem}>{key}</option>)}
+						{JSON.parse(localStorage['authData']).user.id ? <option></option> : null}
+						{JSON.parse(localStorage['authData']).user.id ? <option onClick={this.handleNewOption}>test</option> : null}
 					</select>
 				</div> : null }
 				{data ?
 				<button className='button' onClick={this.handleClick}>
 					Vote
 				</button> : null }
+				{this.state.addingOption === true ? 
+					<div className='field column is-6 is-offset-3'>
+						<label className='label'>New Option</label>
+						<div className='control'>
+							<input className='input' type='text' id='ahoy' />
+						</div>
+						<button className='button is-link is-info' onClick={this.handleNewOptionSubmit}>Submit</button>
+					</div>
+					: null}
 				{this.state.chartData ? <div>
 					{
 					this.state.chartData.map(
@@ -133,9 +156,9 @@ class Chart extends Component {
 			//this sets all values equal to 1 only when all actual values equal 0, so that the pie chart will always display and with appropriate percentages
 			) : '';
 		return(
-		<ResponsiveContainer width='100%' height={400} id='mobilePi'>
+		<ResponsiveContainer  width='100%' height={400} id='mobilePi'>
 			<PieChart>
-					<Pie isAnimationActive={false} data={chartData.length > 0 ? chartData.slice() : this.props.chartData.slice()} outerRadius={180} innerRadius={90} dataKey='value' nameKey='name' labelLine={false} label={this.renderLabel}>
+					<Pie isAnimationActive={false} data={chartData.length > 0 ? chartData.slice() : this.props.chartData.slice()} outerRadius='100%' innerRadius='60%' dataKey='value' nameKey='name' labelLine={false} label={this.renderLabel}>
 						{
 							this.props.chartData.map((entry, index) => (
 								<Cell key={index} fill={colors[index % colors.length]}/>
