@@ -1,4 +1,4 @@
-# My React Boilerplate
+# FreeCodeCamp Voting App
 I built this project from [FreeCodeCamp's curriculum](https://learn.freecodecamp.org/coding-interview-prep/take-home-projects/build-a-voting-app)
 
 ## User Stories
