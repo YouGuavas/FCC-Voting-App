@@ -1,11 +1,18 @@
 import axios from 'axios';
 
 const BASE_URL = 'http://localhost:3333';
-export {getPollsData, getMyPollsData, vote, newPoll, getPollData, deleteMe};
+export {getPollsData, getMyPollsData, vote, newPoll, getPollData, deleteMe, addOptionToPoll};
 function getPollsData() {
 	//console.log(user);
 	const url = `${BASE_URL}/api/polls`;
 	return axios.post(url).then(res=>res.data);
+}
+function addOptionToPoll(_id, option) {
+	const url = `${BASE_URL}/api/updatepoll`;
+	return axios.post(url, {
+		_id: _id,
+		option: option
+	}).then(res=>res.data);
 }
 function getMyPollsData(user) {
 	//console.log(user);

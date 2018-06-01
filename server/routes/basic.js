@@ -34,6 +34,7 @@ const sendToken = (req, res) => {
 	return res.status(200).send(JSON.stringify(req.user));
 }
 router.post('/polls', (req, res) => {
+	//retrieve all polls
 	mongo.connect(mongoURI, (err, client) => {
 		if (err) throw err;
 		const db = client.db(process.env.DB_NAME);
@@ -49,6 +50,7 @@ router.post('/polls', (req, res) => {
 	});
 });
 router.post('/mypolls', (req, res) => {
+	//retrieve polls created by the user
 	mongo.connect(mongoURI, (err, client) => {
 		if (err) throw err;
 		const db = client.db(process.env.DB_NAME);
@@ -66,6 +68,7 @@ router.post('/mypolls', (req, res) => {
 	});
 });
 router.get('/delete/:POLL_ID', (req, res) => {
+	//handle poll deletion
 	mongo.connect(mongoURI, (err, client) => {
 		if (err) throw err;
 		const db = client.db(process.env.DB_NAME);
@@ -81,6 +84,7 @@ router.get('/delete/:POLL_ID', (req, res) => {
 });
 
 router.get('/poll/:POLL_ID', (req, res) => {
+	//grab a specific poll
 	mongo.connect(mongoURI, (err, client) => {
 		if (err) throw err;
 		const db = client.db(process.env.DB_NAME);
@@ -94,7 +98,9 @@ router.get('/poll/:POLL_ID', (req, res) => {
 		})
 	})
 });
+
 router.get('/vote/:POLL_ID/:VOTE_FOR', (req, res) => {
+	//handle votes
 	mongo.connect(mongoURI, (err, client) => {
 		if(err) throw err;
 		const db = client.db(process.env.DB_NAME);
@@ -107,13 +113,26 @@ router.get('/vote/:POLL_ID/:VOTE_FOR', (req, res) => {
 		})
 	})
 });
-router.post('/newpoll', (req, res) => {
+
+router.post('/updatepoll', (req, res) => {
 	mongo.connect(mongoURI, (err, client) => {
 		if (err) throw err;
 		const db = client.db(process.env.DB_NAME);
 		const collection = db.collection(process.env.COLLECTION);
+		const update = 	`poll.options.${req.body.option}`;
+		collection.update({_id: ObjectId(req.body._id)}, {$set: {[update]: 0}}, (err, data) => {
+			if (err) throw err;
+			client.close();
+		})
+	})
+});
 
-		//console.log(req.body);
+router.post('/newpoll', (req, res) => {
+	//create poll
+	mongo.connect(mongoURI, (err, client) => {
+		if (err) throw err;
+		const db = client.db(process.env.DB_NAME);
+		const collection = db.collection(process.env.COLLECTION);
 		collection.insert({'id': req.body.id, 'email': req.body.email, 'poll': {'title': req.body.title, 'options': req.body.options}})
 		client.close();
 	})
@@ -145,8 +164,6 @@ router.post('/auth/twitter', (req, res, next) => {
 		form: {oauth_verifier: req.query.oauth_verifier}
 	}, (err, r, body) => {
 		if (err) return res.send(500, {message: err.message});
-		
-		//console.log(body);
 		const bodyString = `{"${body.replace(/&/g, '", "').replace(/=/g, '": "')}"}`;
 		const parsedBody = JSON.parse(bodyString);
 		req.body['oauth_token'] = parsedBody.oauth_token;
