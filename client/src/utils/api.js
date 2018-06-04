@@ -5,7 +5,7 @@ export {getPollsData, getMyPollsData, vote, newPoll, getPollData, deleteMe, addO
 function getPollsData() {
 	//console.log(user);
 	const url = `${BASE_URL}/api/polls`;
-	return axios.post(url).then(res=>res.data);
+	return axios.get(url).then(res=>res.data);
 }
 function addOptionToPoll(_id, option) {
 	const url = `${BASE_URL}/api/updatepoll`;

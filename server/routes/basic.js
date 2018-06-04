@@ -33,7 +33,7 @@ const sendToken = (req, res) => {
 	res.setHeader('x-auth-token', req.token);
 	return res.status(200).send(JSON.stringify(req.user));
 }
-router.post('/polls', (req, res) => {
+router.get('/polls', (req, res) => {
 	//retrieve all polls
 	mongo.connect(mongoURI, (err, client) => {
 		if (err) throw err;
